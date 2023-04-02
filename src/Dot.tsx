@@ -1,12 +1,15 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import './Dot.css';
 
 interface Props {
-  delayTime: number;
+  animationDelay: string;
 }
 
-const Dot: React.FC<Props> = ({ delayTime }) => {
+const Dot: React.FC<Props> = ({ animationDelay }) => {
   const dotRef = useRef<HTMLDivElement>(null);
+  const [x, setX] = useState(10);
+  const [y, setY] = useState(10);
+  // const [animationDelay, setAnimationDelay] = useState((Math.random() * 8) + "ms");
 
   const handleAnimationEnd = () => {
     // Add the CSS class that triggers the animation
@@ -14,6 +17,9 @@ const Dot: React.FC<Props> = ({ delayTime }) => {
       dotRef.current.classList.add('dot-fade');
     }
     handleRestartAnimation();
+    setX(Math.floor(Math.random() * 100));
+    setY(Math.floor(Math.random() * 100));
+    console.log("x", x, "y", y);
   };
 
   const handleRestartAnimation = () => {
@@ -27,20 +33,19 @@ const Dot: React.FC<Props> = ({ delayTime }) => {
     }
   };
 
-  const componentDidMount = () => {
-    // Add the CSS class that triggers the animation
-    if (dotRef.current) {
-      dotRef.current.classList.add('dot-fade');
-    }
-  };
 
   return (
     <div
-      className="dot"
+      className="dot dot-fade"
       ref={dotRef}
       onAnimationEnd={handleAnimationEnd}
       onClick={handleRestartAnimation}
-      style={{ animationDelay: `${delayTime}ms` }}
+      style={{
+        // animationDelay: `${delayTime}ms`,
+        animationDelay: animationDelay,
+        top: x + '%',
+        left: y + '%',
+      }}
     ></div>
   );
 };

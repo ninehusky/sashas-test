@@ -9,7 +9,6 @@
 
 .dot-fade {
   animation: fade-in-out 2s ease-in-out;
-
 }
 
 @keyframes fade-in-out {
